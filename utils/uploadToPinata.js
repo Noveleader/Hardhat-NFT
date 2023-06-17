@@ -29,6 +29,17 @@ async function storeImages(imageFilePath){
             console.log(error)
         }
     }
+    //Reponses are going to be hash 
     return {responses, files }
 }
-module.exports = {storeImages}
+
+async function storeMetadata(metadataFilePath){
+    try {
+        const response = await pinata.pinJSONToIPFS(metadataFilePath)
+        return response
+    } catch(error){
+        console.log(error)
+    }
+    return null
+}
+module.exports = {storeImages, storeMetadata}
