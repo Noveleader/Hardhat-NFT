@@ -74,4 +74,24 @@ contract Encoding{
         return someString;
     }
 
+    // 1. ABI
+    // 2. Contract 
+    // How do we send txn that call functions with just the data field populated?
+    // How do we populate the data field. 
+
+    //Solidity has some more "low-level" keywords, namely "staticcall" and "call".
+    //call: How we call functions to change the state of the blockchain.
+    //staticcall: This is how (at a low level) we do our "view" or "pure" function calls, NOT CHANGE STATE OF BLOCKCHAIN
+
+    function withdraw(address recentWinner) public {
+        (bool success, ) = recentWinner.call{value: address(this).balance}("");
+        require(success, "Transfer Failed");
+    }
+
+    //Here ("") these empty parameter mean we are not passing any data to the function call. 
+    // - In our {} we are able to pass specific fields of a txn, like value
+    // - In our () we are able to pass data in order to call a specific function - but here there was no option to call that's why ("")
+    // We only sent ETH, so we didn't need to call a function!
+    // IF we want to call a function, or send any data, we would do in these paranthesis.
+    
 }
