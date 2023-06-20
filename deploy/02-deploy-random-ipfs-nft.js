@@ -38,13 +38,11 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   // 1. With our own IPFS node : https://docs.ipfs.io/
   // 2. pinata : https://pinata.cloud/
   // 3. nft.storage : https://nft.storage/
-  let vrfCoordinatorV2Address, vrfCoordinatorV2Mock
-    subscriptionId = null;
+  let vrfCoordinatorV2Address, vrfCoordinatorV2Mock;
+  subscriptionId = null;
 
   if (developmentChains.includes(network.name)) {
-    vrfCoordinatorV2Mock = await ethers.getContract(
-      "VRFCoordinatorV2Mock"
-    );
+    vrfCoordinatorV2Mock = await ethers.getContract("VRFCoordinatorV2Mock");
     vrfCoordinatorV2Address = vrfCoordinatorV2Mock.address;
     const tx = await vrfCoordinatorV2Mock.createSubscription();
     const txReceipt = await tx.wait(1);
@@ -71,10 +69,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log: true,
     waitConfirmations: network.config.blockConfirmations || 1,
   });
-  await vrfCoordinatorV2Mock.addConsumer(
-    subscriptionId,
-    randomIpfsNft.address
-  );
+  await vrfCoordinatorV2Mock.addConsumer(subscriptionId, randomIpfsNft.address);
   log("---------------------------------");
   log("Deployed to:", randomIpfsNft.address);
   if (
@@ -84,7 +79,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log("Verifying on Etherscan. This will take a few minutes...");
     await verify(randomIpfsNft.address, args);
   }
-  
 };
 
 async function handleTokenURIs() {
