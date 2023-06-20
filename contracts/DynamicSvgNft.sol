@@ -87,4 +87,20 @@ contract DynamicSvgNft is ERC721 {
                 )
             );
     }
+
+    function getTokenCounter() public view returns (uint256) {
+        return s_tokenCounter;
+    }
+
+    function getHighValue(uint256 tokenId) public view returns (int256) {
+        return s_tokenIdToHighValue[tokenId];
+    }
+
+    function getLowImageURI() public view returns (string memory) {
+        return i_lowImageURI;
+    }
+
+    function getHighImageURI() public view returns (string memory) {
+        return i_highImageURI;
+    }
 }
